@@ -9,9 +9,11 @@
 
 #if __LP64__
 #define ADDR "%16lx"
+#define SIZE "%lx"
 #define IMAGE_OFFSET 0x2000
 #else
 #define ADDR "%8x"
+#define SIZE "%x"
 #define IMAGE_OFFSET 0x1000
 #endif
 
