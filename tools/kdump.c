@@ -82,11 +82,16 @@ int main()
         case LC_SEGMENT_64: {
             #if __LP64__
             seg = (struct segment_command_64*)cmd;
+            printf("[+] found segment %s(addr: 0x" ADDR ", size: 0x" SIZE ")\n", seg->segname, (unsigned long)seg->vmaddr, (unsigned long)seg->filesize);
             #else
             seg = (struct segment_command*)cmd;
+            printf("[+] found segment %s(addr: 0x" ADDR ", size: 0x" SIZE ")\n", seg->segname, (unsigned int)seg->vmaddr, (unsigned int)seg->filesize);
             #endif
-            printf("[+] found segment %s\n", seg->segname);
-            read_kernel(seg->vmaddr, seg->filesize, binary + seg->fileoff);
+            if (seg->filesize > 0)
+            {
+              //sleep(5);
+              read_kernel(seg->vmaddr, seg->filesize, binary + seg->fileoff);
+            }
             filesize = max(filesize, seg->fileoff + seg->filesize);
         }
         case LC_UUID:
